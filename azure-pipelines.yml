@@ -1,5 +1,11 @@
-# parameters:
-#   - 
+parameters:
+  - name: enviroment
+    displayName: PARAMETERS
+    type: string
+    default: dev
+    values:
+      - dev
+      - prod
 
 
 trigger: none
