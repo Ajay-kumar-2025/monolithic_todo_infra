@@ -1,0 +1,57 @@
+# parameters:
+#   - 
+
+
+trigger: none
+pool: todo-pool
+stages:
+  - stage: terraforminit
+    displayName: TERRAFORM INIT
+    jobs:
+      - job: terraforminit
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+              backendServiceArm: 'svc-todo-man'
+              backendAzureRmStorageAccountName: 'azurepipeline123'
+              backendAzureRmContainerName: 'azure'
+              backendAzureRmKey: 'terraform.tfstate'
+  - stage: terraformplan
+    displayName: TERRAFORM PLAN
+    jobs:
+      - job: 
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'svc-todo-man'
+              backendAzureRmStorageAccountName: 'azurepipeline123'
+              backendAzureRmContainerName: 'azure'
+              backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'svc-todo-man'
+  - stage: terraformapply
+    displayName: TERRAFORM APPLY
+    jobs:
+      - job: terraformapply
+        steps:
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'svc-todo-man'
+              backendAzureRmStorageAccountName: 'azurepipeline123'
+              backendAzureRmContainerName: 'azure'
+              backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'svc-todo-man'
