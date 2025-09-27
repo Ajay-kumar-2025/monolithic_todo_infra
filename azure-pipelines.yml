@@ -3,11 +3,9 @@ parameters:
     displayName: PARAMETERS
     type: string
     default: dev
-    values:
+    values:           
       - dev
       - prod
-      - staging
-
 
 trigger: none
 pool: todo-pool
@@ -20,12 +18,12 @@ stages:
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+              command: 'init'                                                 
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               backendServiceArm: 'svc-todo-man'
               backendAzureRmStorageAccountName: 'azurepipeline123'
               backendAzureRmContainerName: 'azure'
-              backendAzureRmKey: 'terraform.tfstate'
+              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
   - stage: terraformplan
     displayName: TERRAFORM PLAN
     jobs:
@@ -37,12 +35,15 @@ stages:
               command: 'init'
               backendServiceArm: 'svc-todo-man'
               backendAzureRmStorageAccountName: 'azurepipeline123'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               backendAzureRmContainerName: 'azure'
-              backendAzureRmKey: 'terraform.tfstate'
+              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
               command: 'plan'
+              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               environmentServiceNameAzureRM: 'svc-todo-man'
   - stage: terraformapply
     displayName: TERRAFORM APPLY
@@ -55,10 +56,12 @@ stages:
               command: 'init'
               backendServiceArm: 'svc-todo-man'
               backendAzureRmStorageAccountName: 'azurepipeline123'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               backendAzureRmContainerName: 'azure'
-              backendAzureRmKey: 'terraform.tfstate'
+              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               environmentServiceNameAzureRM: 'svc-todo-man'
