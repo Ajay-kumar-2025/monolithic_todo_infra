@@ -6,6 +6,7 @@ parameters:
     values:
       - dev
       - prod
+      - staging
 
 
 trigger: none
