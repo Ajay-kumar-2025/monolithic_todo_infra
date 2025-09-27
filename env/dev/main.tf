@@ -24,8 +24,6 @@ module "subnet-pm" {
 }
 
 
-
-
 module "vm-pm" {
   depends_on = [ module.subnet-pm ]
   source = "../../module/virtaul-machine"
