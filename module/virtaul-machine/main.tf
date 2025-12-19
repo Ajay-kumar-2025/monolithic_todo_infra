@@ -1,5 +1,5 @@
 data "azurerm_subnet" "subnet-b" {
-  for_each = var.child-vm-v
+  for_each = var.child-vm
     name                 = each.value.subnet_name
     virtual_network_name = each.value.virtual_network_name
     resource_group_name  = each.value.resource_group_name
@@ -7,7 +7,7 @@ data "azurerm_subnet" "subnet-b" {
 
 
 resource "azurerm_network_interface" "nic-b" {
-  for_each = var.child-vm-v
+  for_each = var.child-vm
   name                = each.value.nic_name
   location            = each.value.nic_location
   resource_group_name = each.value.resource_group_name
@@ -19,7 +19,7 @@ resource "azurerm_network_interface" "nic-b" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm-b" {
-  for_each = var.child-vm-v
+  for_each = var.child-vm
   name                = each.value.vm_name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
@@ -44,7 +44,7 @@ disable_password_authentication = false
 }
 
 resource "azurerm_network_security_group" "nsg-b" {
-  for_each = var.child-vm-v
+  for_each = var.child-vm
   name                = each.value.nsg_name
   location            = each.value.nsg_location
   resource_group_name = each.value.resource_group_name
@@ -64,7 +64,7 @@ resource "azurerm_network_security_group" "nsg-b" {
 
 
 resource "azurerm_network_interface_security_group_association" "assocc-b" {
-  for_each = var.child-vm-v
+  for_each = var.child-vm
   network_interface_id      = azurerm_network_interface.nic-b[each.key].id
   network_security_group_id = azurerm_network_security_group.nsg-b[each.key].id
 }

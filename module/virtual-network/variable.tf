@@ -1,6 +1,3 @@
-variable "child-vnet-v" {
+variable "child-vnet" {
   
 }
-# variable "environment" {
-  
-# }

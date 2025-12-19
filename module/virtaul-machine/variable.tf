@@ -1,4 +1,4 @@
-variable "child-vm-v" {
+variable "child-vm" {
   
 }
 

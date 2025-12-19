@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "child-stg-b" {
-for_each = var.child-stg-v
+for_each = var.child-stg
   name = each.value.name
   resource_group_name = each.value.resource_group_name
   location = each.value.location

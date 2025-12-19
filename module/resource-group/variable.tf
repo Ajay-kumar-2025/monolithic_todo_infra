@@ -1,3 +1,3 @@
-variable "child-rg-mv" {
+variable "child-rg-infra" {
 
 }

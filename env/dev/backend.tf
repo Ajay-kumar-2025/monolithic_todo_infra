@@ -1,8 +1,10 @@
 terraform {
   backend "azurerm" {
-    access_key           = "KyZfhDVlbETYorG/kmtwhAgHkErpusX+NfD1F27or08HYXB/Huzd0+5e/PECyr/vI11vtlEiVNm4+AStUjjxXA=="  # Can also be set via `ARM_ACCESS_KEY` environment variable.
-    storage_account_name = "azurepipeline123"                                 # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
-    container_name       = "azure"                                  # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
-    key                  = "prod.terraform.tfstate"                   # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
+    use_cli              = true                                    # Can also be set via `ARM_USE_CLI` environment variable.
+    use_azuread_auth     = true                                    # Can also be set via `ARM_USE_AZUREAD` environment variable.
+    tenant_id            = "17fefa14-e7b1-4378-b18d-e3dd81067594"  # Can also be set via `ARM_TENANT_ID` environment variable. Azure CLI will fallback to use the connected tenant ID if not supplied.
+    storage_account_name = "pikustorage"                              # Can be passed via `-backend-config=`"storage_account_name=<storage account name>"` in the `init` command.
+    container_name       = "tfcontainer"                               # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
+    key                  = "prod.terraform.tfstate"           # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
   }
 }

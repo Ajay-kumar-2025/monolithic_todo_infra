@@ -1,3 +1,3 @@
-variable "child-stg-v" {
+variable "child-stg" {
   
 }

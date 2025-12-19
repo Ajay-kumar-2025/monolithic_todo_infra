@@ -1,0 +1,6 @@
+# Terraform
+.terraform/
+azure-pipelines.yml
+
+# Terraform lock file (optional – usually commit kar sakte ho)
+.terraform.lock.hcl
