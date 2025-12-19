@@ -8,7 +8,7 @@ parameters:
       - prod
 
 trigger: none
-pool: todo-pool
+pool:  Terraform-pool
 stages:
   - stage: terraforminit
     displayName: TERRAFORM INIT
@@ -21,9 +21,9 @@ stages:
               command: 'init'                                                 
               workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               backendServiceArm: 'svc-todo-man'
-              backendAzureRmStorageAccountName: 'azurepipeline123'
-              backendAzureRmContainerName: 'azure'
-              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
+              backendAzureRmStorageAccountName: 'pikustorage'
+              backendAzureRmContainerName: 'tfcontainer'
+              backendAzureRmKey: '${{ parameters.enviroment }}.prod.terraform.tfstate'
   - stage: terraformplan
     displayName: TERRAFORM PLAN
     jobs:
@@ -36,8 +36,8 @@ stages:
               backendServiceArm: 'svc-todo-man'
               backendAzureRmStorageAccountName: 'pikustorage'
               workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
-              backendAzureRmContainerName: 'azure'
-              backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
+              backendAzureRmContainerName: 'tfcontainer'
+              backendAzureRmKey: '${{ parameters.enviroment }}.prod.terraform.tfstate'
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
