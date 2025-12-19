@@ -34,7 +34,7 @@ stages:
               provider: 'azurerm'
               command: 'init'
               backendServiceArm: 'svc-todo-man'
-              backendAzureRmStorageAccountName: 'azurepipeline123'
+              backendAzureRmStorageAccountName: 'pikustorage'
               workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               backendAzureRmContainerName: 'azure'
               backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
