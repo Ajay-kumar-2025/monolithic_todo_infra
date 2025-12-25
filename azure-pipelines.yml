@@ -45,6 +45,17 @@ stages:
               backendAzureRmKey: '${{ parameters.enviroment }}.terraform.tfstate'
               workingDirectory: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
               environmentServiceNameAzureRM: 'svc-todo-man'
+  - stage: terraformscan
+    displayName: TERRAFORM SCAN
+    jobs:
+      - job: 
+        steps: 
+          - task: tfsec@1
+            continueOnError: true
+            inputs:
+             version: 'v1.26.0'
+             dir: '$(System.DefaultWorkingDirectory)/env/${{ parameters.enviroment }}'
+
   - stage: terraformapply
     displayName: TERRAFORM APPLY
     jobs:
